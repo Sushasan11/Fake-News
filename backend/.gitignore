@@ -1,0 +1,98 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folders
+env/
+venv/
+.venv/
+
+# Environment variable files
+.env
+.env.*
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Logs
+*.log
+logs/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# VSCode settings
+.vscode/
+
+# Docker
+*.pid
+*.tar
+*.gz
+docker-compose.override.yml
+
+# Database
+*.sqlite3
+*.db
+
+# FastAPI specific
+instance/
+app/static/uploads/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Mac / Windows
+.DS_Store
+Thumbs.db
+
+# Snowflake / Spark temp
+__spark_libs__/
+
+# Ignore dataset folders
+dataset/
+data/
+
+# Ignore test reports
+*.pytest_cache
+test-reports/
