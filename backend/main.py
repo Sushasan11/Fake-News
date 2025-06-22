@@ -1,4 +1,3 @@
-# main.py
 from fastapi import FastAPI
 from routes.predict import router as predict_router
 
