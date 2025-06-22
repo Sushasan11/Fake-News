@@ -1,27 +1,31 @@
-# model/model_handler.py
 import tensorflow as tf
+import joblib
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# Load both models
-model_1 = tf.keras.models.load_model('ai-model/model_1.h5')
-model_2 = tf.keras.models.load_model('ai-model/model_2.h5')
+# Load the LSTM model
+lstm_model = tf.keras.models.load_model('D:/Data Engineer/Project/Fake-News/backend/model/ai_model/lstm_model.h5')
 
-# Initialize the TF-IDF vectorizer used during model training
-tfidf_vectorizer = TfidfVectorizer(max_features=5000)
+# Load the fitted TF-IDF vectorizer 
+tfidf_vectorizer = joblib.load('D:/Data Engineer/Project/Fake-News/backend/model/ai_model/tfidf_vectorizer.pkl')
 
-# Function to predict if the news article is fake or real
-def predict_news(article: str, model_choice: int):
-    # Feature extraction
+# Function to predict if the news article is fake or real using the LSTM model
+def predict_news(article: str):
+    # Feature extraction: Transform the article using the fitted vectorizer
     transformed_text = tfidf_vectorizer.transform([article])
 
-    # Predict using the selected model
-    if model_choice == 1:
-        prediction = model_1.predict(transformed_text)
-    elif model_choice == 2:
-        prediction = model_2.predict(transformed_text)
-    else:
-        raise ValueError("Invalid model choice. Choose either 1 or 2.")
+    # Ensure the input is reshaped correctly, as the model expects 2D data
+    transformed_text = np.array(transformed_text.toarray())
 
-    # Return prediction
-    return np.argmax(prediction, axis=1)[0]
+    # Predict using the LSTM model
+    prediction = lstm_model.predict(transformed_text)
+
+    # Get the confidence (probability) and convert the prediction to 0 (Real) or 1 (Fake)
+    confidence = prediction[0][0]
+    prediction_label = 1 if confidence >= 0.5 else 0
+
+    # Convert `confidence` to a Python float to make it JSON serializable
+    confidence = float(confidence)
+
+    # Return prediction and confidence
+    return prediction_label, confidence
