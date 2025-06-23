@@ -27,7 +27,7 @@ export default function FakeNewsDetector() {
         title: title.trim(),
       });
 
-      setResult(response.data);
+      setResult(response.data); // Only contains prediction ("Real" or "Fake") and confidence
     } catch (error) {
       console.error("Error analyzing news:", error);
       setError("Failed to analyze. Please try again.");
@@ -64,7 +64,7 @@ export default function FakeNewsDetector() {
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-600 rounded-lg">
-              <Shield className="w-6 h-6 text-white" /> {/* Shield icon here */}
+              <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -138,32 +138,41 @@ export default function FakeNewsDetector() {
             {/* Results Section */}
             {result && (
               <div
-                className={`border-2 rounded-lg p-6 ${getResultStyle(
-                  result.credibility
-                )}`}
+                className={`border-2 rounded-lg p-6 ${
+                  result.prediction === "Real"
+                    ? "border-green-200 bg-green-50"
+                    : "border-red-200 bg-red-50"
+                }`}
               >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 mt-1">
-                    {getResultIcon(result.credibility)}
+                    {result.prediction === "Real" ? (
+                      <CheckCircle className="w-6 h-6 text-green-600" />
+                    ) : (
+                      <AlertTriangle className="w-6 h-6 text-red-600" />
+                    )}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-3">
                       <h3
-                        className={`text-xl font-semibold ${getResultTextColor(
-                          result.credibility
-                        )}`}
+                        className={`text-xl font-semibold ${
+                          result.prediction === "Real"
+                            ? "text-green-800"
+                            : "text-red-800"
+                        }`}
                       >
-                        {result.credibility === "reliable" && "Likely Credible"}
-                        {result.credibility === "suspicious" &&
-                          "Potentially Unreliable"}
-                        {result.credibility === "error" && "Analysis Error"}
+                        {result.prediction === "Real"
+                          ? "Likely Credible"
+                          : "Potentially Unreliable"}
                       </h3>
-                      {result.confidence > 0 && (
+                      {result.confidence !== undefined && (
                         <div className="text-right">
                           <div
-                            className={`text-2xl font-bold ${getResultTextColor(
-                              result.credibility
-                            )}`}
+                            className={`text-2xl font-bold ${
+                              result.prediction === "Real"
+                                ? "text-green-800"
+                                : "text-red-800"
+                            }`}
                           >
                             {result.confidence}%
                           </div>
@@ -173,16 +182,6 @@ export default function FakeNewsDetector() {
                         </div>
                       )}
                     </div>
-
-                    {result.message && (
-                      <p
-                        className={`mb-4 ${getResultTextColor(
-                          result.credibility
-                        )}`}
-                      >
-                        {result.message}
-                      </p>
-                    )}
                   </div>
                 </div>
               </div>
