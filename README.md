@@ -29,7 +29,7 @@ cd your-repo-name
 # Backend setup
 cd backend
 python -m venv env
-source env/bin/activate       # Windows: env\Scripts\activate
+env\Scripts\activate
 pip install -r requirements.txt
 uvicorn main:app --reload
 
