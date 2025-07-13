@@ -23,8 +23,8 @@ A full-stack web application that detects whether a news article is real or fake
 ### 📁 Clone and Setup
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/Sushasan11/Fake-News
+cd Fake-News
 
 # Backend setup
 cd backend
